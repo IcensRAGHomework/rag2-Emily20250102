@@ -24,7 +24,7 @@ def hw02_1(q1_pdf):
     
     page_chunks = page_splitter.split_documents(documents)
 
-    print(f"Total chunks: {len(page_chunks)}")
+    # print(f"Total chunks: {len(page_chunks)}")
     # print(f"Sample chunk: {page_chunks[0]}")
     lastChunk = page_chunks[-1]
     return lastChunk
@@ -35,7 +35,9 @@ def hw02_2(q2_pdf):
 
     full_text = ""
     for document in documents:
-        full_text += document.page_content
+        # full_text += document.page_content
+        full_text = full_text + document.page_content +"\n"
+
 
     chapter_splitter = RecursiveCharacterTextSplitter(  
         chunk_size = 500,
@@ -49,7 +51,7 @@ def hw02_2(q2_pdf):
     session_splitter = RecursiveCharacterTextSplitter(  
         chunk_size = 10,
         chunk_overlap= 0,
-        separators=[r"(?:\n|^|\s*)第\s+[0-9]+(?:-[0-9]+)?\s+條.*\n"],
+        separators=[r"(?:\n|^)第\s+[0-9]+(?:-[0-9]+)?\s+條.*\n"],
         is_separator_regex=True,
         add_start_index = False,
     )
@@ -66,8 +68,8 @@ def hw02_2(q2_pdf):
 
 if __name__ == "__main__":
     print("****************hw02_1******************")
-    first_chunk = hw02_1(q1_pdf)
-    print(first_chunk)
+    last_chunk = hw02_1(q1_pdf)
+    print(last_chunk)
     print("\n")
     print("****************hw02_2******************")
     chunk_size = hw02_2(q2_pdf)
